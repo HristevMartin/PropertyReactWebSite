@@ -1,0 +1,50 @@
+.contact-form {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 5px;
+    border: 1px solid #ddd; /* Add a border to the entire form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px; /* Adjust the width as necessary */
+    margin: auto;
+  }
+  
+  .contact-form h1 {
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .contact-form .form-control {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 40px; 
+    padding: 5px 10px; 
+  }
+  
+  .contact-form .form-select {
+    height: 40px; 
+    padding: 5px 10px; 
+  }
+  
+  .contact-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 123, 255, 0.6);
+  }
+  
+  .contact-form .btn-primary {
+    background-color: #0056b3;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .contact-form .btn-primary:hover {
+    background-color: #003d82;
+  }
+  
+  .contact-form textarea {
+    height: auto;
+  }
+  

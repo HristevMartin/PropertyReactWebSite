@@ -1,0 +1,66 @@
+.property-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .property-header {
+    text-align: center;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 20px;
+  }
+  
+  .property-title {
+    color: #333;
+    font-size: 2rem;
+  }
+  
+  .property-address {
+    color: #666;
+    font-size: 1.2rem;
+  }
+  
+  .property-price {
+    color: #007bff ;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .property-gallery {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 20px 0;
+  }
+  
+  .property-image {
+    height: 300px;
+    flex-shrink: 0;
+    border-radius: 5px;
+  }
+  
+  .property-info,
+  .property-features {
+    padding: 20px 0;
+  }
+  
+  .property-info h2,
+  .property-features h2 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .property-features ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .property-features li {
+    background: #f9f9f9;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-left: 5px solid #5cb85c;
+  }
+  

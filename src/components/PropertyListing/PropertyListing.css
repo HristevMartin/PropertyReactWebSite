@@ -1,0 +1,103 @@
+.container-card {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 20px;
+
+  /* min-height: 660px; */
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.sort-area-container select {
+  width: 100%;
+  max-width: 250px;
+}
+
+.search-container > div:nth-child(3) select { 
+  width: 100%; /* Adjust this as needed */
+  max-width: 250px; /* This prevents the select from becoming too wide */
+}
+
+.pagination-controls button {
+  margin: 0 10px;
+}
+
+.button-to-map {
+  margin-left: 25px;
+  padding: 10px 20px;
+  background-color: #0056b3; /* Bootstrap primary color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 4px 0 rgba(0,123,255,.25); /* A slight shadow with a color that matches the button */
+}
+
+.button-to-map:hover {
+  background-color: #0056b3; /* A darker shade for hover state */
+  box-shadow: 0 2px 8px 0 rgba(0,123,255,.5);
+}
+
+.button-to-map:disabled {
+  background-color: #5a6268; /* A gray shade to indicate disabled state */
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+
+.search-container {
+  display: flex;
+  gap: 20px;
+  text-align: center;
+  justify-content: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.search-container div label {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #333;
+}
+
+.search-container input,
+.search-container select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.search-container input:focus,
+.search-container select:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .search-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-container div {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

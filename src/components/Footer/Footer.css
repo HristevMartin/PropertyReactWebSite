@@ -1,0 +1,17 @@
+.footer {
+    background-color: #343a40; /* Dark background for footer */
+    color: #f8f9fa; /* Light color for the text for contrast */
+    padding: 20px 20px; /* Adjust padding to give more space */
+    text-align: center; /* Center the text inside the footer */
+    line-height: 1.5; /* Give more line height for better readability */
+    border: none; /* Remove the red border */
+    margin-top: 30px; /* Add space between the content and the footer */
+    font-family: 'Arial', sans-serif; /* Consistent font-family */
+  }
+  
+  @media (max-width: 768px) {
+    .footer {
+      padding: 20px 10px; /* Less padding on the sides on smaller screens */
+    }
+  }
+  

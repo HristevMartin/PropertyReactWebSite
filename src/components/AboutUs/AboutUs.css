@@ -1,0 +1,183 @@
+/* AboutUs.css */
+
+.about-us {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.hero-image {
+  width: 94%;
+  height: 70vh;
+  margin: auto;
+}
+
+
+.hero-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-learn-more {
+  padding: 10px 20px;
+  background-color: #4CAF50; /* Change this to match your color scheme */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* About Content Section */
+.about-content {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.info-section {
+  width: 30%;
+  padding: 10px;
+}
+
+/* Team Section */
+.team-section {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.team-section h2 {
+  margin-bottom: 30px;
+}
+
+.team-members {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+/* Team Member Placeholder */
+.team-member {
+  width: 200px;
+  margin: 10px;
+}
+
+/* Timeline Section */
+.timeline-section {
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  background-color: #e9ecef;
+  padding: 40px 20px;
+}
+
+/* Image Gallery */
+.image-gallery {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.gallery-img {
+  margin: 0 15px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.elevated {
+  transform: translateY(-20px);
+}
+
+/* Footer Section */
+.footer-section {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* clients feedback section */
+
+/* Testimonials Section */
+.testimonials-section {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: #f7f7f7;
+}
+
+.testimonials-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.testimonial-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin: 10px;
+  padding: 20px;
+  width: 300px;
+  border-radius: 5px;
+}
+
+.testimonial-text {
+  font-style: italic;
+  color: #555;
+}
+
+.client-name {
+  margin-top: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .testimonials-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .testimonial-card {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+}
+
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+  .about-content, .team-members {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .info-section, .team-member {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .image-gallery {
+    flex-direction: column;
+  }
+
+  .gallery-img {
+    margin-bottom: 20px;
+  }
+
+  .elevated {
+    transform: translateY(0);
+  }
+}

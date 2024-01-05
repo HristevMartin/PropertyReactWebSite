@@ -1,0 +1,89 @@
+.container-card-container {
+  max-width: 300px;
+  margin: 20px; /* Added more margin for breathing space */
+  padding: 20px;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+  border-radius: 10px; /* Consistent rounded corners */
+  overflow: hidden;
+  background: #ffffff; /* Solid background for cards */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition for interaction */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  min-height: 350px;
+}
+
+.container-card-image {
+  width: 100%;
+  height: 200px; /* Adjust height to be auto to maintain aspect ratio */
+  object-fit: cover;
+  border-top-left-radius: 10px; /* Rounded corners for the top of the image */
+  border-top-right-radius: 10px;
+}
+
+.container-card-container div p {
+  margin-bottom: 8px; /* Consistent margin for p elements */
+  font-size: 16px; /* Adjust font size for readability */
+  font-weight: 600; /* Semi-bold font weight for important info */
+  text-align: left; /* Align text to left for natural reading flow */
+  color: #333;
+}
+
+.container-card-button {
+  background-color: #0056b3; /* A vibrant, eye-catching blue */
+  color: #ffffff; /* Pure white text for contrast */
+  border: none; /* Removes the border */
+  padding: 12px 24px; /* Ample padding for a comfortable clickable area */
+  border-radius: 6px; /* Slightly more rounded corners for a friendly appearance */
+  cursor: pointer; /* The hand cursor indicates a clickable button */
+  transition: all 0.3s ease; /* A smooth transition for multiple properties */
+  text-transform: uppercase; /* Capital letters for a commanding button text */
+  font-weight: 600; /* Bold but not too heavy */
+  font-size: 16px; /* Adequate font size for legibility */
+  line-height: 1.5; /* Appropriate line height for the button text */
+  letter-spacing: 0.5px; /* A little space between letters for clarity */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* A light shadow for depth */
+  display: flex; /* Flex display to align text */
+  justify-content: center; /* Center text horizontally */
+  align-items: center; /* Center text vertically */
+  text-align: center; /* Ensures text is centered if it wraps */
+  text-decoration: none; /* Ensures no underline appears */
+  margin: 10px 0; /* Adds some margin at the top and bottom of the button */
+}
+
+.container-card-button:hover, .container-card-button:focus {
+  background-color: #004a9f; /* A slightly darker shade on hover/focus for feedback */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* A deeper shadow to lift the button off the page */
+  transform: translateY(-1px); /* Subtly lifts the button to indicate actionability */
+}
+
+/* Optional: You might add an active state for when the button is clicked */
+.container-card-button:active {
+  background-color: #003d82; /* Even darker for a pressed effect */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Flattens the shadow as if the button is being pressed */
+  transform: translateY(1px); /* Button moves down slightly to mimic a physical button being pressed */
+}
+
+
+
+.container-card-container div p:first-child {
+  color: #007bff; /* Highlight price with a different color */
+  font-size: 18px; /* Larger font size for price */
+}
+
+.container-card-text{
+  align-items: center;
+  text-align: left;
+}
+
+.container-card-container:hover {
+  transform: translateY(-5px); /* Lift card on hover */
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+@media (max-width: 600px) {
+  .container-card-container {
+    max-width: 100%;
+    margin: 10px; /* Smaller margin for mobile */
+  }
+}
