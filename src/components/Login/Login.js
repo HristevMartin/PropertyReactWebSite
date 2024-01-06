@@ -6,6 +6,9 @@ import { useAuth } from "../../context/AuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './Login.css';
 
+const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
+
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -39,6 +42,8 @@ function Login() {
   };
 
   useEffect(() => {
+    console.log('show me this', process.env.REACT_APP_GCP_CLIENT_ID);
+
     window.google.accounts.id.initialize({
       client_id:
         "948437153038-ji2e0m83j882bsk3vchgrfksl08ds6o4.apps.googleusercontent.com",

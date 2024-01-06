@@ -21,9 +21,12 @@ function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    
+    let token = process.env.REACT_APP_GCP_CLIENT_ID
+    
     window.google.accounts.id.initialize({
       client_id:
-        "948437153038-ji2e0m83j882bsk3vchgrfksl08ds6o4.apps.googleusercontent.com",
+      token,
       callback: handleCredentialResponse,
     });
 

@@ -27,15 +27,19 @@ const PropertyListing = () => {
 
   const { user, logout, refreshToken } = useAuth();
 
-  const sortPropertiesByPrice = useCallback(
-    (properties) => {
-      return properties.sort((a, b) => {
+  const sortPropertiesByPrice = useCallback((properties) => {
+        return properties.sort((a, b) => {
         const priceA = parseFloat(a.price_per_week);
         const priceB = parseFloat(b.price_per_week);
-
+          
+        console.log('a', a);
+        console.log('b', b);
+        
         return sortOrder === "low" ? priceA - priceB : priceB - priceA;
-      });
+      }
+      );
     },
+
     [sortOrder]
   );
 

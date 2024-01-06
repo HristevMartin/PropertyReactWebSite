@@ -37,15 +37,13 @@ const Modal = () => {
       console.error("Error during logout:", error);
     }finally {
         // Perform client-side logout regardless of the server response
-        logout();
-        navigate("/login");
         hideModal();
       }
   };
 
   return (
     <div className="myapp-modal">
-        <p style={{textAlign: 'center'}}>Are you sure you want to sing out?</p>
+        <p style={{textAlign: 'center'}}>Are you sure you want to sign out?</p>
       <div className="modal-buttons">
         <button onClick={requestUser}>Yes</button>
         <button onClick={hideModal}>No</button>
