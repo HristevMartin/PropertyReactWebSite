@@ -15,7 +15,7 @@ const PropertyListing = () => {
   const [area, sortArea] = useState("");
   const [uniqueAreas, setUniqueAreas] = useState([]);
 
-  const [viewMode, setViewMode] = useState("list"); 
+  const [viewMode, setViewMode] = useState("list");
 
   const toggleViewMode = () => {
     setViewMode((prevMode) => (prevMode === "list" ? "map" : "list"));
@@ -27,17 +27,14 @@ const PropertyListing = () => {
 
   const { user, logout, refreshToken } = useAuth();
 
-  const sortPropertiesByPrice = useCallback((properties) => {
-        return properties.sort((a, b) => {
+  const sortPropertiesByPrice = useCallback(
+    (properties) => {
+      return properties.sort((a, b) => {
         const priceA = parseFloat(a.price_per_week);
         const priceB = parseFloat(b.price_per_week);
-          
-        console.log('a', a);
-        console.log('b', b);
-        
+
         return sortOrder === "low" ? priceA - priceB : priceB - priceA;
-      }
-      );
+      });
     },
 
     [sortOrder]
@@ -79,7 +76,6 @@ const PropertyListing = () => {
       if (area.trim() !== "") {
         params.sortArea = area.trim();
       }
-      console.log("params", params);
 
       url.search = new URLSearchParams(params).toString();
 
@@ -94,7 +90,7 @@ const PropertyListing = () => {
         const json = await response.json();
         const sortedData = sortPropertiesByPrice(json.data || []);
         setSample(sortedData);
-        console.log("json paginated response", json);
+
         setTotalPages(Math.ceil(json.total_items / pageSize));
       } else {
         console.error("Failed to fetch");
@@ -139,6 +135,74 @@ const PropertyListing = () => {
     sortArea(event.target.value);
   };
 
+  // chat bot
+
+  const saveMessagesToLocalStorage = (messages) => {
+    localStorage.setItem('chatMessages', JSON.stringify(messages));
+  };
+
+  const getMessagesFromLocalStorage = () => {
+    const storedMessages = localStorage.getItem('chatMessages');
+    return storedMessages ? JSON.parse(storedMessages) : [];
+  }
+
+
+  const [userMessage, setUserMessage] = useState('');
+  const [messages, setMessages] = useState(getMessagesFromLocalStorage());
+
+  useEffect(() => {
+    saveMessagesToLocalStorage(messages);
+  }, [messages]);
+
+
+  const [chatBot, setChatBot] = useState(false);
+
+  const openChatBot = () => {
+    setChatBot((prev) => !prev);
+  };
+
+  const sendRequestToApi = async () => {
+
+    let payloadData = JSON.stringify({
+      message: userMessage,
+      user_id: user.id
+    })
+
+    console.log("send request to api");
+    
+    const request = await fetch(`http://127.0.0.1:8000/uk-estate-property/chatbot/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: payloadData
+    })
+    
+    if (!request.ok) {
+      alert("Failed to send message")
+      throw new Error(`HTTP error! status: ${request.status}`);
+    }
+
+    let response = await request.json()
+    console.log('response', response);
+    console.log('response.bot_reply', response[1].bot_reply);
+    setMessages(e => [
+      ...e, 
+      { text: response[0].reply, sender: 'user' },
+      { text: response[1].bot_reply, sender: 'bot' }
+    ])
+    setUserMessage('')
+  }
+
+  const handleInputChange = (e) => {
+    setUserMessage(e.target.value);
+  };
+
+  const closeChatBot = () => {
+    setChatBot(false);
+  };
+
+
   return (
     <div className="parent-search-container">
       <div className="search-container">
@@ -166,6 +230,45 @@ const PropertyListing = () => {
           </select>
         </div>
       </div>
+
+      {/* button for dialogflow agent */}
+      <div>
+        <button className="chatbot-button" onClick={openChatBot}>ChatBot</button>
+      </div>
+
+      <div
+        className="chatbot-container"
+        style={{ display: chatBot ? "block" : "none" }}
+      >
+        <div onClick={closeChatBot} className="chatbot-header">
+          <h1>ChatBot</h1>
+          <span className="chatbot-close-btn">X</span>
+        </div>
+
+        <div  className="chatbot-body">
+          {
+            messages.map((message, index) => (
+              <div key={index} className={`message ${message.sender}`}>
+                  <label className="message-text">{message.text}</label>
+              </div>
+            ))
+          }
+        </div>
+
+        <div className="chatbot-footer">
+          <input
+            onChange={handleInputChange}
+            type="text"
+            value={userMessage}
+            placeholder="Type a message..."
+            className="chatbot-input"
+          />
+          <button onClick={sendRequestToApi} className="chatbot-send-btn">Send</button>
+        </div>
+      </div>
+
+      {/* chatbot ends */}
+
       <div className="container-card">
         {sample.map((item) => (
           <Card key={item.id} item={item} />
@@ -175,7 +278,7 @@ const PropertyListing = () => {
         <button onClick={handlePrevious} disabled={currentPage === 1}>
           Previous
         </button>
-        <span style={{marginTop: '10px'}}>
+        <span style={{ marginTop: "10px" }}>
           Page {currentPage} of {totalPages}
         </span>
         <button onClick={handleNext} disabled={currentPage === totalPages}>
@@ -183,19 +286,15 @@ const PropertyListing = () => {
         </button>
       </div>
 
-      <div  className="view-toggle">
+      <div className="view-toggle">
         <button className="button-to-map" onClick={toggleViewMode}>
           {viewMode === "list" ? "Switch to Map" : "Collapse Map"}
         </button>
       </div>
 
       <div className="ss">
-        {viewMode === "list" ? null
-         : (
-          <MapView properties={sample} />
-        )}
+        {viewMode === "list" ? null : <MapView properties={sample} />}
       </div>
-      
     </div>
   );
 };

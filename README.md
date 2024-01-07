@@ -9,6 +9,7 @@ PrimeProp Realty offers a streamlined real estate browsing experience with a wid
 - **Search Functionality**: A dynamic search bar that allows users to filter properties by area, price, and other criteria.
 - **Authentication System**: Secure login and registration system to safeguard user information and preferences.
 - **Pagination**: Efficient navigation through listings with a structured page system.
+- **ChatBot Integration**: Implement chatbot feature with persistent message history and dynamic UI interactions
 - **Responsive Design**: A user-friendly interface across various devices and screen sizes.
 
 ## Getting Started

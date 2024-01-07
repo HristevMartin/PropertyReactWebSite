@@ -89,6 +89,137 @@
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
+/* chatbot css */
+
+.chatbot-container {
+  width: 300px;
+  height: 500px; 
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  border: 1px solid #ddd;
+  z-index: 1000; 
+  overflow-y: auto;
+}
+
+.chatbot-header {
+  background-color: #005fff;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.chatbot-button{
+  position: fixed;
+  right: 0px;
+  border-radius: 6px;
+  z-index: 1001;
+}
+
+.chatbot-body {
+  padding: 10px;
+  flex-grow: 1; 
+  overflow-y: auto;
+  min-height: 350px;
+}
+
+.chatbot-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+  flex-shrink: 0;
+}
+
+.message{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.message-text{
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+}
+
+
+
+
+.chatbot-close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px; /* adjusted for better visual alignment */
+  cursor: pointer; /* Indicates a clickable item */
+  background-color: #ff4545; /* A shade of red that's not too bright */
+  padding: 4px 8px; /* Slightly more horizontal padding */
+  border-radius: 50%; /* Circular shape */
+  color: white; /* White text color for contrast */
+  font-weight: bold; /* Make the 'X' bold */
+  font-size: 14px; /* Adjust font size as needed */
+  line-height: 1; /* Line height to 1 for better vertical alignment */
+  text-align: center; /* Center the text horizontally */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: add a subtle shadow */
+  user-select: none; /* Prevents text selection */
+  border: none; /* Removes the border if any */
+}
+
+/* Optional: Change the appearance on hover */
+.chatbot-close-btn:hover {
+  background-color: #ff2020; /* A slightly darker shade of red on hover */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* Optional: enhance the shadow on hover */
+}
+
+/* Styles for the user messages */
+.message.user .message-text {
+  background-color: #007bff;
+  color: white;
+  /* other styles... */
+}
+
+/* Styles for the bot messages */
+.message.bot .message-text {
+  background-color: #e9e9eb;
+  color: black;
+  /* other styles... */
+}
+
+
+.chatbot-input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.chatbot-send-btn {
+  padding: 5px 10px;
+  background-color: #005fff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Add responsiveness */
+@media (max-width: 600px) {
+  .chatbot-container {
+    width: 100%;
+    height: 300px;
+    bottom: 0;
+    right: 0;
+    border-radius: 0;
+  }
+}
+
+
+/*  */
+
 /* Responsive Design */
 @media (max-width: 600px) {
   .search-container {
