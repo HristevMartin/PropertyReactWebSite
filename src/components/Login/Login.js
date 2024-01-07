@@ -42,6 +42,7 @@ function Login() {
   };
 
   useEffect(() => {
+    console.log('show me this', process.env.REACT_APP_GCP_CLIENT_ID);
     let token = process.env.REACT_APP_GCP_CLIENT_ID
 
     window.google.accounts.id.initialize({
