@@ -7,7 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 function Header() {
   const { showModal } = useModal();
 
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   let guestNavigation = (
     <ul className="nav-links">
@@ -26,7 +26,7 @@ function Header() {
         <a href="/">Home</a>
       </li>
       <li>
-        <a href="/listings">Listings</a>
+        <a href="/listings">Properties</a>
       </li>
       <li>
         <a href="/about">About Us</a>
@@ -46,9 +46,9 @@ function Header() {
     <header className="header">
       <nav className="navbar">
         <div className="logo">
-          <img className="img-logo" src="https://files.oaiusercontent.com/file-HVAhjHw8XAoEODzZrj7T4fh8?se=2024-01-04T09%3A33%3A43Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Dde0889bc-5b4f-49af-a2a5-34cc7a72c9e2.webp&sig=Lba44SemiCVC2pmFdCmGacyohwnSXLuSW7AlS1Za9WQ%3D" />
+          <img className="img-logo" src="https://cdn1.vectorstock.com/i/1000x1000/27/85/real-estate-property-logo-template-vector-6252785.jpg" />
         </div>
-        {user.access_token ? userNavigation : guestNavigation}
+        {user.access_token ? userNavigation :   guestNavigation}
       </nav>
     </header>
   );

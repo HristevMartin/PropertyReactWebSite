@@ -1,61 +1,81 @@
-import "./MapView.css";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Link } from "react-router-dom";
+import {
+  GoogleMap,
+  LoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+import { useState } from "react";
+import "./MapView.css";
 
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-});
+const containerStyle = {
+  width: "100%",
+  height: "400px",
+};
 
-const MapView = ({ properties }) => {
+
+const MapComponent = ({ property }) => {
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [showInfoWindow, setShowInfoWindow] = useState(false);
+
+  const center = {
+    lat: property.lattitude,
+    lng: property.longtitude,
+  };
+
+  const handleMouseOver = () => {
+    setSelectedProperty(property);
+  };
+
+  const handleMouseOut = () => {
+    setSelectedProperty(null);
+  };
+
   return (
-    <div className="parent-map-view-container">
-      <div>
-        <h1 className="map-view-title">Map View</h1>
-      </div>
-
-      <MapContainer
-        center={[51.505, -0.09]}
-        zoom={15}
-        className="map-view-container"
+    <LoadScript googleMapsApiKey="AIzaSyCwJaT7AU5agi_Ul_zwCWsQ-U5CYvZlLPA">
+      <GoogleMap
+        mapContainerClassName="map-view-container"
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
       >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {properties.map((property) => (
-          <Marker
-            key={property.id}
-            position={[property.lattitude, property.longtitude]}
-          >
-            <Popup>
-              <div className="leaflet-popup-content">
-                <img
-                  src={property.right_image_url ? property.right_image_url[0] : 'default image'}
-                  alt={property.title}
-                  className="property-popup-image"
-                />
-                <div className="property-popup-price">
-                  Price: {property.price}
-                </div>
-                <div>
-                  <Link to={`/item-property-detail/${property.id}`}>
-                    <p className="view-details">View Details</p>
-                  </Link>
-                </div>
+        <Marker
+          position={center}
+          onMouseOver={() => setShowInfoWindow(true)}
+          onMouseOut={() => setShowInfoWindow(false)}
+        >
+          {showInfoWindow && (
+            <InfoWindow
+              position={{
+                lat: selectedProperty.lattitude,
+                lng: selectedProperty.longtitude,
+              }}
+              onCloseClick={() => setShowInfoWindow(false)}
+            >
+              <div className="info-window-content">
+                <h1 className="info-window-title">{selectedProperty.title}</h1>
+                <p className="info-window-price">
+                  Price: {selectedProperty.price}
+                </p>
+                {/* Add an image if available */}
+                {selectedProperty.images &&
+                  selectedProperty.images.length > 0 && (
+                    <img
+                      src={selectedProperty.images[0]}
+                      alt="Property"
+                      style={{ width: "100%", marginTop: "5px" }} // Inline style for demo purposes, you can create a CSS class for this
+                    />
+                  )}
               </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-
-    </div>
+            </InfoWindow>
+          )}
+        </Marker>
+        <Marker position={center} />
+      </GoogleMap>
+    </LoadScript>
   );
 };
 
-export default MapView;
+export default React.memo(MapComponent);

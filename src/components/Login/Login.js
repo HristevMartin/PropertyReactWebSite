@@ -6,26 +6,27 @@ import { useAuth } from "../../context/AuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './Login.css';
 
-const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
+// const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
+let apiUrl= process.env.REACT_APP_API_URL;
 
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { login } = useAuth();
 
   const navigate = useNavigate();
-
   const sendLoginToServer = async (e) => {
     e.preventDefault();
+    console.log('doing the request');
 
     let payload = {
-      username: username,
+      email: email,
       password: password,
     };
 
-    const response = await fetch("http://127.0.0.1:8000/auth_app/token/obtain/", {
+    const response = await fetch(`${apiUrl}/auth_app/token/obtain/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,16 +34,19 @@ function Login() {
       body: JSON.stringify(payload),
     });
 
+    console.log('here')
     if (response.status === 200) {
       alert("Logged in Successfully");
       let data = await response.json();
       login(data);
       navigate("/");
+    }else if(response.status === 400){
+      console.log("Wrong Credentials", response.status);
+      alert("Wrong Credentials... Please try again")
     }
   };
 
   useEffect(() => {
-    console.log('show me this', process.env.REACT_APP_GCP_CLIENT_ID);
     let token = process.env.REACT_APP_GCP_CLIENT_ID
 
     window.google.accounts.id.initialize({
@@ -61,7 +65,7 @@ function Login() {
   
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/auth_app/login/google/", 
+        `${apiUrl}/auth_app/login/google/`, 
         {
           method: "POST",
           headers: {
@@ -70,13 +74,19 @@ function Login() {
           body: JSON.stringify({ google_token: response.credential }),
         }
       );
-  
+
+      console.log('show me the status code', res.status)
+      
       if (res.status === 200) {
         const data = await res.json();
         console.log("Login successful", data);
         login(data); 
         navigate("/")
-      } else {
+      }else if(res.status === 400){
+        console.log("Wrong Credentials", res.status, res.statusText);
+        alert("Wrong Credentials... Please try again")
+      }
+       else {
         console.error("Failed to log in", res.status, res.statusText);
         alert("Failed to log in. Please try again.");
       }
@@ -92,14 +102,14 @@ function Login() {
     <div className="container mt-5">
       <form onSubmit={sendLoginToServer} className="border p-4 mx-auto" style={{ maxWidth: '400px' }}>
         <div className="form-group">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="email">Email</label>
           <input
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             type="text"
             className="form-control"
-            id="username"
-            placeholder="Enter Username"
-            name="username"
+            id="email"
+            placeholder="Enter Email"
+            name="email"
             required
           />
         </div>
@@ -118,7 +128,7 @@ function Login() {
         </div>
 
         <button type="submit" className="btn btn-primary btn-block btn-cstm">Login</button>
-        <div id="signInDiv" className="mt-3"></div>
+        <div id="signInDiv" style={{marginLeft: '52px'}} className="mt-3"></div>
       </form>
     </div>
   );

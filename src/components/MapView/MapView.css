@@ -1,57 +1,10 @@
-.leaflet-popup-content {
-  text-align: center; 
-}
-
-.leaflet-popup-content img {
-  width: 100%;
-  height: auto; 
-  max-width: 500px;
-  border-radius: 8px; 
-  margin: 0 auto;
-}
-
-.property-popup-price {
-  margin-top: 10px; 
-  font-weight: bold; 
-}
-
-.view-details {
-  display: inline-block;
-  padding: 8px 16px;
-  margin-top: 10px;
-  font-size: 0.9rem;
-  text-decoration: none;
-  color: white;
-  background-color: #007bff; /* Bootstrap primary blue */
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.view-details:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  text-decoration: none; /* Ensures the text-decoration does not change on hover */
-  color: white;
-}
-
+/* MapComponent.css */
 
 .map-view-container {
-  height: 70vh;
-  width: 80%;
-  border: 10px solid grey;
-  padding: 20px 15px;
-  border-radius: 4%;
-}
-
-.map-view-title {
-  font-size: 2rem;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.parent-map-view-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 64% !important;
+  border-radius: 2%;
 }

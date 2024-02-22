@@ -3,6 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Contact.css";
 import { useNavigate } from "react-router-dom";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
+
 function Contact() {
 
     // define navigate from use Navigate
@@ -36,7 +39,7 @@ function Contact() {
         try {
             console.log('formData', formData);
             
-            const response = await fetch('http://127.0.0.1:8000/uk-estate-property/inquery_create/', {
+            const response = await fetch(`${apiUrl}/uk-estate-property/inquery_create/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +53,7 @@ function Contact() {
 
             const result = await response.json();
             console.log('Success:', result);
-            alert('Your request has been submitted successfully')
+            alert('Your request has been submitted successfully. Someone will contact you soon.')
             Navigate('/')
             // Handle success - perhaps clear form or show a success message.
         } catch (error) {

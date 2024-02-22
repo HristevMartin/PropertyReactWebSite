@@ -4,8 +4,27 @@
   grid-auto-rows: 1fr;
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 20px;
+  min-height: 54vh;
+  place-items: center;
+}
 
-  /* min-height: 660px; */
+.no-results {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #e7e7e7;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 20%; /* Take up full width */
+  grid-column: 1 / -1; /* Span across all columns */
+}
+
+.no-results:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .pagination-controls {
@@ -19,10 +38,34 @@
   max-width: 250px;
 }
 
-.search-container > div:nth-child(3) select { 
-  width: 100%; /* Adjust this as needed */
-  max-width: 250px; /* This prevents the select from becoming too wide */
+/* .search-container > div:nth-child(3) select { 
+  width: 100%;
+  max-width: 250px; 
+} */
+
+.search-container > div {
+  flex: 1 0 21%; /* Adjust the percentage based on your needs and the number of items */
+  max-width: 200px; /* Or whatever maximum width you desire */
+  box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+  margin: 0 10px; /* Optional: add some space between items */
 }
+
+.search-container > div {
+  flex: 0 0 auto; /* Do not grow or shrink */
+  width: 24%; /* Adjust this value to fit 4 items in a row */
+  margin-right: 1%; /* Optional: add some space between items */
+}
+
+/* Remember to remove the margin-right for the last item */
+.search-container > div:last-child {
+  margin-right: 0;
+}
+
+.search-container select,
+.search-container input {
+  min-width: 100px; /* Prevents the elements from becoming too small */
+}
+
 
 .pagination-controls button {
   margin: 0 10px;
@@ -55,12 +98,29 @@
   cursor: not-allowed;
 }
 
+.loading{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* style the loading */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: blue;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 1000;
+}
+
 
 .search-container {
   display: flex;
   gap: 20px;
   text-align: center;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
   padding: 20px;
   flex-wrap: wrap;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -147,8 +207,17 @@
   padding: 10px;
 }
 
+.sort-by-area{
+  width: 25%;
+}
 
+.sort-by-area-options{
+  width: 100%;
+}
 
+.sort-by-area-values{
+  width: 100%;
+}
 
 .chatbot-close-btn {
   position: absolute;
@@ -205,6 +274,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 
 /* Add responsiveness */
 @media (max-width: 600px) {

@@ -8,6 +8,8 @@ const initialUserState = {
   refresh_token: "",
 };
 
+let apiUrl= process.env.REACT_APP_API_URL;
+
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -25,7 +27,7 @@ export const AuthContextProvider = ({ children }) => {
   const refreshToken = async () => {
     try {
       const response = await fetch(
-        "http://127.0.0.1:8000/auth_app/token/refresh/",
+        `${apiUrl}/auth_app/token/refresh/`,
         {
           method: "POST",
           headers: {
@@ -37,14 +39,11 @@ export const AuthContextProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        // Update user state with new access token
         setUser({ ...user, access_token: data.access });
       } else {
-        // Logout if refresh fails
         logout();
       }
     } catch (error) {
-      // Logout on network error or other exception
       logout();
     }
   };
