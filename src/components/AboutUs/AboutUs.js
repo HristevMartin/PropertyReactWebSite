@@ -20,7 +20,7 @@ function AboutUs() {
           <h1>Welcome to Estate Agent</h1>
           <p>Your trusted partner in finding your dream home.</p>
           <a href="/listings">
-            <button className="btn-learn-more">Listings </button>
+            <button className="btn-learn-more">See Properties </button>
           </a>
         </div>
       </div>
@@ -70,7 +70,7 @@ function AboutUs() {
           {/* Team Member 2 */}
           <div className="team-member">
             <img
-              src="https://media.licdn.com/dms/image/D4E03AQEF-dDOF1NVpw/profile-displayphoto-shrink_800_800/0/1673110259167?e=2147483647&v=beta&t=IJt1cakodWRVozqHoscFHb4awxLPN3r8nOg-TuJGx0g"
+              src="path_to_member_2_image.jpg"
               alt="Jane Smith"
               className="team-member-photo"
             />
@@ -105,7 +105,7 @@ function AboutUs() {
         <VerticalTimeline>
           <VerticalTimelineElement
             className="vertical-timeline-element--work"
-            date="2001"
+            date="2022"
             iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
           >
             <h3 className="vertical-timeline-element-title">Founded</h3>
@@ -117,7 +117,7 @@ function AboutUs() {
 
           <VerticalTimelineElement
             className="vertical-timeline-element--work"
-            date="2005"
+            date="2024"
             iconStyle={{ background: "rgb(233, 30, 99)", color: "#fff" }}
           >
             <h3 className="vertical-timeline-element-title">
@@ -128,7 +128,9 @@ function AboutUs() {
               our mark in the industry.
             </p>
           </VerticalTimelineElement>
-
+        </VerticalTimeline>
+      </div>
+      {/* 
           <VerticalTimelineElement
             className="vertical-timeline-element--work"
             date="2010"
@@ -196,9 +198,7 @@ function AboutUs() {
               Celebrated a quarter-century of service, with over a million homes
               sold.
             </p>
-          </VerticalTimelineElement>
-        </VerticalTimeline>
-      </div>
+          </VerticalTimelineElement> */}
 
       {/* Testimonials Section */}
       <div className="testimonials-section">
@@ -230,7 +230,6 @@ function AboutUs() {
       </div>
 
       {/* Image Gallery */}
-   
     </div>
   );
 }

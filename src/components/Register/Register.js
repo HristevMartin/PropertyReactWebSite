@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import './Register.css';
 
+let apiUrl = process.env.REACT_APP_API_URL;
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -21,20 +22,20 @@ function Register() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    
-    let token = process.env.REACT_APP_GCP_CLIENT_ID
+
+    const clientId = '419141935816-l55gn89pm881kmsv0q82at4iga8a6fkh.apps.googleusercontent.com';
     
     window.google.accounts.id.initialize({
-      client_id:
-      token,
+      client_id: clientId,
       callback: handleCredentialResponse,
     });
-
+  
     window.google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
       { theme: "outline", size: "large" } 
     );
   }, []);
+  
 
   const handleRequest = async (e) => {
     e.preventDefault();
@@ -46,7 +47,9 @@ function Register() {
       password2: password2,
     };
 
-    const response = await fetch("http://127.0.0.1:8000/auth_app/register/", {
+    console.log('show me the payload', payload);
+
+    const response = await fetch(`${apiUrl}/auth_app/register/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +67,7 @@ function Register() {
   
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/auth_app/login/google/", 
+        `${apiUrl}/auth_app/login/google/`, 
         {
           method: "POST",
           headers: {
@@ -98,23 +101,38 @@ function Register() {
         <h2 className="text-center mb-4">Register</h2>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username</label>
-          <input className="form-control" /* ... */ />
+          <input className="form-control" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email</label>
-          <input className="form-control" /* ... */ />
+          <input 
+          className="form-control"
+          id='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className="mb-3">
           <label htmlFor="password" className="form-label">Password</label>
-          <input className="form-control" /* ... */ />
+          <input 
+          className="form-control"
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <div className="mb-4">
           <label htmlFor="password2" className="form-label">Repeat Password</label>
-          <input className="form-control" /* ... */ />
+          <input className="form-control"
+          type="password"
+          id="password2"
+          value={password2}
+          onChange={(e) => setPassword2(e.target.value)}
+          />
         </div>
         <button type="submit" className="btn btn-primary btn-block mb-3">Register</button>
-        <div id="signInDiv" className="text-center">
-          {/* Google sign-in button */}
+        <div id="signInDiv" className="text-center custom-google-div">
         </div>
       </form>
     </div>

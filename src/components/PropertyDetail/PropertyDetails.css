@@ -64,3 +64,17 @@
     border-left: 5px solid #5cb85c;
   }
   
+  .button-map{
+    background-color: #007bff !important;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .div-button-map{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }

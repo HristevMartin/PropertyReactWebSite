@@ -6,7 +6,9 @@ import fetchWithToken from "../../services/apiServices";
 import MapView from "../MapView/MapView";
 
 const PropertyListing = () => {
+  //load the data
   const [sample, setSample] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(8);
   const [totalPages, setTotalPages] = useState(0);
@@ -14,8 +16,16 @@ const PropertyListing = () => {
   const [searchArea, setSearchArea] = useState("");
   const [area, sortArea] = useState("");
   const [uniqueAreas, setUniqueAreas] = useState([]);
+  const [countries, setCountires] = useState([]);
+  const [sortCountry, setSortCountry] = useState("all");
+  const [price, setPrice] = useState([]);
+  const [priceChange, setPriceChange] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const [viewMode, setViewMode] = useState("list");
+
+  const apiUrl = process.env.REACT_APP_API_URL;
+
 
   const toggleViewMode = () => {
     setViewMode((prevMode) => (prevMode === "list" ? "map" : "list"));
@@ -40,33 +50,75 @@ const PropertyListing = () => {
     [sortOrder]
   );
 
-  const fetchUniqueAreas = useCallback(async () => {
-    const url = `http://127.0.0.1:8000/uk-estate-property/unique-areas/`;
+  const fetchUniqueContries = useCallback(async () => {
+    // define the url
+    const url = new URL(
+      `${apiUrl}/uk-estate-property/unique-country/`
+    );
 
-    const response = await fetchWithToken(
+    if (searchArea.trim() !== "") {
+      url.searchParams.append("searchArea", searchArea);
+    }
+
+    const resposne = await fetchWithToken(
       url,
       user.access_token,
       refreshToken,
       logout
     );
 
-    if (response.ok) {
-      const json = await response.json();
-      setUniqueAreas(json);
+    if (resposne.ok) {
+      const json = await resposne.json();
+      setCountires(json);
     } else {
-      console.error("Failed to fetch unique areas");
+      console.error("Failed to fetch unique countries");
     }
-  }, [user.access_token, refreshToken, logout]);
+  }, [user.access_token, refreshToken, logout, searchArea]);
 
+  const fetchUniqueAreas = useCallback(
+    async (selectedCountry) => {
+      const url = new URL(
+        `${apiUrl}/uk-estate-property/unique-areas/`
+      );
+
+      if (sortCountry && sortCountry !== "all") {
+        url.searchParams.append("country", sortCountry);
+      }
+
+      if (searchArea.trim() !== "") {
+        console.log("searchArea", searchArea);
+        url.searchParams.append("searchArea", searchArea);
+      }
+
+      const response = await fetchWithToken(
+        url,
+        user.access_token,
+        refreshToken,
+        logout
+      );
+
+      if (response.ok) {
+        const json = await response.json();
+        setUniqueAreas(json);
+      } else {
+        console.error("Failed to fetch unique areas");
+      }
+    },
+    [user.access_token, refreshToken, logout, sortCountry, searchArea]
+  );
+
+  console.log("apiUrl", apiUrl);
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const url = new URL(
-        `http://127.0.0.1:8000/uk-estate-property/property-pagination/`
+        `${apiUrl}/uk-estate-property/property-pagination/`
       );
       const params = {
         page: currentPage,
         page_size: pageSize,
         sort: sortOrder === "low" ? "price_per_week" : "-price_per_week",
+        country: sortCountry,
       };
 
       if (searchArea.trim() !== "") {
@@ -75,6 +127,10 @@ const PropertyListing = () => {
 
       if (area.trim() !== "") {
         params.sortArea = area.trim();
+      }
+
+      if (priceChange.trim() !== "") {
+        params.price = priceChange.trim();
       }
 
       url.search = new URLSearchParams(params).toString();
@@ -88,10 +144,11 @@ const PropertyListing = () => {
 
       if (response.ok) {
         const json = await response.json();
-        const sortedData = sortPropertiesByPrice(json.data || []);
+        const sortedData = json.data;
         setSample(sortedData);
 
         setTotalPages(Math.ceil(json.total_items / pageSize));
+        setIsLoading(false);
       } else {
         console.error("Failed to fetch");
       }
@@ -105,18 +162,52 @@ const PropertyListing = () => {
     currentPage,
     area,
     sortOrder,
+    sortCountry,
     searchArea,
     pageSize,
+    priceChange,
     refreshToken,
     logout,
     sortPropertiesByPrice,
   ]);
 
+  const fetchRequest = useCallback(async () => {
+    const url = new URL(
+      `${apiUrl}/uk-estate-property/price-range/`
+    );
+
+    if (searchArea.trim() !== "") {
+      url.searchParams.append("searchArea", searchArea);
+    }
+
+    if (sortCountry && sortCountry !== "all") {
+      url.searchParams.append("sortCountry", sortCountry);
+    }
+
+    const request = await fetch(url);
+
+    if (!request.ok) {
+      alert("Failed to fetch price range");
+      throw new Error(`HTTP error! status: ${request.status}`);
+    } else {
+      let response = await request.json();
+      setPrice(response);
+    }
+  }, [logout, user.access_token, searchArea, sortCountry]);
+
   useEffect(() => {
     if (user.access_token) {
-      fetchUniqueAreas();
+      fetchUniqueAreas(sortCountry);
+      fetchUniqueContries();
+      fetchRequest();
     }
-  }, [fetchUniqueAreas]);
+  }, [
+    fetchUniqueAreas,
+    fetchUniqueContries,
+    fetchRequest,
+    sortCountry,
+    searchArea,
+  ]);
 
   const handlePrevious = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
@@ -130,6 +221,11 @@ const PropertyListing = () => {
     setSortOrder(event.target.value);
   };
 
+  const handleSortOrderCountry = (event) => {
+    console.log("event", event.target.value);
+    setSortCountry(event.target.value);
+  };
+
   const handleSortArea = (event) => {
     console.log("event", event.target.value);
     sortArea(event.target.value);
@@ -138,22 +234,20 @@ const PropertyListing = () => {
   // chat bot
 
   const saveMessagesToLocalStorage = (messages) => {
-    localStorage.setItem('chatMessages', JSON.stringify(messages));
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
   };
 
   const getMessagesFromLocalStorage = () => {
-    const storedMessages = localStorage.getItem('chatMessages');
+    const storedMessages = localStorage.getItem("chatMessages");
     return storedMessages ? JSON.parse(storedMessages) : [];
-  }
+  };
 
-
-  const [userMessage, setUserMessage] = useState('');
+  const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState(getMessagesFromLocalStorage());
 
   useEffect(() => {
     saveMessagesToLocalStorage(messages);
   }, [messages]);
-
 
   const [chatBot, setChatBot] = useState(false);
 
@@ -162,37 +256,38 @@ const PropertyListing = () => {
   };
 
   const sendRequestToApi = async () => {
-
     let payloadData = JSON.stringify({
       message: userMessage,
-      user_id: user.id
-    })
+      user_id: user.id,
+    });
 
     console.log("send request to api");
-    
-    const request = await fetch(`http://127.0.0.1:8000/uk-estate-property/chatbot/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: payloadData
-    })
-    
+
+    const request = await fetch(
+      `${apiUrl}/uk-estate-property/chatbot/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: payloadData,
+      }
+    );
+
     if (!request.ok) {
-      alert("Failed to send message")
+      alert("Failed to send message");
       throw new Error(`HTTP error! status: ${request.status}`);
     }
 
-    let response = await request.json()
-    console.log('response', response);
-    console.log('response.bot_reply', response[1].bot_reply);
-    setMessages(e => [
-      ...e, 
-      { text: response[0].reply, sender: 'user' },
-      { text: response[1].bot_reply, sender: 'bot' }
-    ])
-    setUserMessage('')
-  }
+    let response = await request.json();
+
+    setMessages((e) => [
+      ...e,
+      { text: response[0].reply, sender: "user" },
+      { text: response[1].bot_reply, sender: "bot" },
+    ]);
+    setUserMessage("");
+  };
 
   const handleInputChange = (e) => {
     setUserMessage(e.target.value);
@@ -202,10 +297,26 @@ const PropertyListing = () => {
     setChatBot(false);
   };
 
+  const handlePriceChange = (event) => {
+    console.log("event of handlePriceChange", event.target.value);
+    setPriceChange(event.target.value);
+  };
 
   return (
     <div className="parent-search-container">
       <div className="search-container">
+        <div>
+          <label>Choose Country</label>
+          <select value={sortCountry} onChange={handleSortOrderCountry}>
+            <option value="all">Select All Countries</option>
+            {countries.map((country, index) => (
+              <option key={index} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div>
           <label>Search By Area</label>
           <input value={searchArea} onChange={handleAreaChange} type="text" />
@@ -218,12 +329,29 @@ const PropertyListing = () => {
             <option value="high">High to Low</option>
           </select>
         </div>
+
         <div>
+          <label>Price Range</label>
+          <select value={priceChange} onChange={handlePriceChange}>
+            <option value="">Select Price Range</option>
+            {price.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="sort-by-area">
           <label>Sort by Area</label>
-          <select value={area} onChange={handleSortArea}>
+          <select
+            className="sort-by-area-options"
+            value={area}
+            onChange={handleSortArea}
+          >
             <option value="">Select All Areas</option>
             {uniqueAreas.map((area) => (
-              <option key={area} value={area}>
+              <option className="sort-by-area-values" key={area} value={area}>
                 {area}
               </option>
             ))}
@@ -233,7 +361,9 @@ const PropertyListing = () => {
 
       {/* button for dialogflow agent */}
       <div>
-        <button className="chatbot-button" onClick={openChatBot}>ChatBot</button>
+        <button className="chatbot-button" onClick={openChatBot}>
+          ChatBot
+        </button>
       </div>
 
       <div
@@ -245,14 +375,12 @@ const PropertyListing = () => {
           <span className="chatbot-close-btn">X</span>
         </div>
 
-        <div  className="chatbot-body">
-          {
-            messages.map((message, index) => (
-              <div key={index} className={`message ${message.sender}`}>
-                  <label className="message-text">{message.text}</label>
-              </div>
-            ))
-          }
+        <div className="chatbot-body">
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message.sender}`}>
+              <label className="message-text">{message.text}</label>
+            </div>
+          ))}
         </div>
 
         <div className="chatbot-footer">
@@ -263,16 +391,24 @@ const PropertyListing = () => {
             placeholder="Type a message..."
             className="chatbot-input"
           />
-          <button onClick={sendRequestToApi} className="chatbot-send-btn">Send</button>
+          <button onClick={sendRequestToApi} className="chatbot-send-btn">
+            Send
+          </button>
         </div>
       </div>
 
       {/* chatbot ends */}
 
       <div className="container-card">
-        {sample.map((item) => (
-          <Card key={item.id} item={item} />
-        ))}
+        {isLoading ? (
+          <div className="loading">Loading...</div>
+        ) : sample.length > 0 ? (
+          sample.map((item) => <Card key={item.id} item={item} />)
+        ) : (
+          <div className="no-results">
+            <div>No results found.</div>
+          </div>
+        )}
       </div>
       <div className="pagination-controls">
         <button onClick={handlePrevious} disabled={currentPage === 1}>
@@ -284,16 +420,6 @@ const PropertyListing = () => {
         <button onClick={handleNext} disabled={currentPage === totalPages}>
           Next
         </button>
-      </div>
-
-      <div className="view-toggle">
-        <button className="button-to-map" onClick={toggleViewMode}>
-          {viewMode === "list" ? "Switch to Map" : "Collapse Map"}
-        </button>
-      </div>
-
-      <div className="ss">
-        {viewMode === "list" ? null : <MapView properties={sample} />}
       </div>
     </div>
   );

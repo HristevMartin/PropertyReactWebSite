@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useModal } from "../../context/ModalContext";
 import "./Modal.css";
-
+let apiUrl = process.env.REACT_APP_API_URL;
 const Modal = () => {
   const { isModalOpen, hideModal } = useModal();
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Modal = () => {
   const requestUser = async () => {
     console.log("inside the logout");
     try {
-      const request = await fetch(`http://127.0.0.1:8000/auth_app/logout`, {
+      const request = await fetch(`${apiUrl}/auth_app/logout`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user.access_token}`,
