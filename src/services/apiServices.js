@@ -1,16 +1,19 @@
-import { useAuth } from "../context/AuthContext";
-
 async function fetchWithToken(
   url,
   accessToken,
   refreshTokenFunction,
   logoutFunction,
-  options = {}
+  options = {},
+  method
 ) {
   options.headers = {
     ...options.headers,
     Authorization: `Bearer ${accessToken}`,
   };
+
+  if (method) {
+    options.method = method;
+  }
 
   let response = await fetch(url, options);
 

@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Contact.css";
 import { useNavigate } from "react-router-dom";
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
+const apiUrl = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : "https://django-estate-agent-dot-gym-pro-410823.uc.r.appspot.com";
 
 function Contact() {
 

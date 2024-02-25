@@ -22,14 +22,7 @@ const PropertyListing = () => {
   const [priceChange, setPriceChange] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [viewMode, setViewMode] = useState("list");
-
-  const apiUrl = process.env.REACT_APP_API_URL;
-
-
-  const toggleViewMode = () => {
-    setViewMode((prevMode) => (prevMode === "list" ? "map" : "list"));
-  };
+  const apiUrl = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : "https://django-estate-agent-dot-gym-pro-410823.uc.r.appspot.com";
 
   const handleAreaChange = (event) => {
     setSearchArea(event.target.value);
@@ -360,7 +353,7 @@ const PropertyListing = () => {
       </div>
 
       {/* button for dialogflow agent */}
-      <div>
+      {/* <div>
         <button className="chatbot-button" onClick={openChatBot}>
           ChatBot
         </button>
@@ -395,7 +388,7 @@ const PropertyListing = () => {
             Send
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* chatbot ends */}
 

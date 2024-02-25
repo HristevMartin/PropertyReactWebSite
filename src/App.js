@@ -5,7 +5,7 @@ import PropertyListing from "./components/PropertyListing/PropertyListing";
 import Register from "./components/Register/Register";
 import { AuthContextProvider, useAuth } from "./context/AuthContext";
 import AuthCallbackComponent from "./AuthCallbackComponent/AuthCallbackComponent";
-import { ModalProvider, useModal } from "./context/ModalContext";
+import { ModalProvider } from "./context/ModalContext";
 import Modal from "./components/Modal/Modal";
 import PropertyDetails from "./components/PropertyDetail/PropertyDetail";
 import HomePage from "./components/Home/HomePage";
@@ -29,13 +29,8 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/listings" element={<PropertyListing />} />
-
                 <Route path="/auth" element={<AuthCallbackComponent />} />
-                {/* <Route path="/map-view" element={<PropertyMapPage />} /> */}
-                <Route
-                  path="/item-property-detail/:id"
-                  element={<PropertyDetails />}
-                />
+                <Route path="/item-property-detail/:id" element={<PropertyDetails />} />
                 <Route path="/about" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/sample" element={<Sample />} />
