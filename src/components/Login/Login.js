@@ -6,9 +6,8 @@ import { useAuth } from "../../context/AuthContext";
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import './Login.css';
 
-// const clientSecret = process.env.REACT_APP_CLIENT_SECRET;
-let apiUrl= process.env.REACT_APP_API_URL;
-
+const BASE_URL = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : "https://django-estate-agent-dot-gym-pro-410823.uc.r.appspot.com";
+console.log('base url', BASE_URL)
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -26,7 +25,7 @@ function Login() {
       password: password,
     };
 
-    const response = await fetch(`${apiUrl}/auth_app/token/obtain/`, {
+    const response = await fetch(`${BASE_URL}/auth_app/token/obtain/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +64,7 @@ function Login() {
   
     try {
       const res = await fetch(
-        `${apiUrl}/auth_app/login/google/`, 
+        `${BASE_URL}/auth_app/login/google/`, 
         {
           method: "POST",
           headers: {
@@ -92,7 +91,6 @@ function Login() {
       }
     } catch (error) {
       console.error("Error during login", error);
-
       alert("An error occurred during login. Please try again.");
     }
   };

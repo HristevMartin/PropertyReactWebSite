@@ -5,7 +5,8 @@ import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import './Register.css';
 
-let apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : "https://django-estate-agent-dot-gym-pro-410823.uc.r.appspot.com";
+console.log('apiUrl', apiUrl);
 
 function Register() {
   const [username, setUsername] = useState("");

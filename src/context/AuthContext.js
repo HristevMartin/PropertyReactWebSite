@@ -16,8 +16,12 @@ export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", initialUserState);
 
   const login = (user) => {
+    console.log('being called..');
+    console.log('user');
     setUser(user);
   };
+
+  console.log('user', user);
 
   const logout = () => {
     console.log("calling the logOut function");
