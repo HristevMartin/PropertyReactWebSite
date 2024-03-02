@@ -65,8 +65,8 @@ const Modal = () => {
     <div className="myapp-modal">
         <p style={{textAlign: 'center'}}>Are you sure you want to sign out?</p>
       <div className="modal-buttons">
-        <button onClick={requestUser}>Yes</button>
-        <button onClick={hideModal}>No</button>
+        <button className="modal-button" onClick={requestUser}>Yes</button>
+        <button className="modal-button" onClick={hideModal}>No</button>
       </div>
     </div>
   );

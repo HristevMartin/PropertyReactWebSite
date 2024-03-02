@@ -45,7 +45,7 @@
     margin-top: 20px;
 }
 
-button {
+.modal-button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -55,14 +55,14 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.modal-button:hover {
     background-color: #0056b3;
 }
 
-button:nth-child(2) {
+.modal-button:nth-child(2) {
     background-color: #dc3545;
 }
 
-button:nth-child(2):hover {
+.modal-button:nth-child(2):hover {
     background-color: #c82333;
 }

@@ -15,6 +15,8 @@ import Login from "./components/Login/Login";
 import Contact from "./components/Contact/Contact";
 import Sample from "./components/Sample/Sample";
 import { PrivateRoute } from "./components/Common/Common";
+// This should be imported before any component that uses Font Awesome icons
+
 
 function App() {
   return (

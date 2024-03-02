@@ -33,6 +33,10 @@
     overflow: hidden;
 }
 
+.footer{
+  margin-top: 0px !important;
+}
+
 .myapp-carousel {
     position: absolute;
     top: 0;
@@ -62,3 +66,46 @@
 }
 
 
+@media only screen and (max-width: 475px) {
+    .hero {
+      padding: 10px; /* Add some padding */
+      padding-bottom: 0px !important;
+      margin-bottom: 0px !important;
+    }
+
+    .hero-content{
+      width: 100%;
+      padding: 0px !important;
+    }
+
+    .myapp-btn{
+      margin-top: 0px;
+    }
+  
+    .myapp-carousel img {
+      width: 100%;
+    }
+
+    .hero-content {
+      /* Center the text and adjust the padding for the hero content */
+      text-align: center;
+      padding: 20px;
+    }
+  
+    .myapp-btn {
+      /* Resize buttons */
+      padding: 10px 20px;
+    }
+  
+    /* Adjust font sizes for smaller screens */
+    .hero-content h2 {
+      font-size: 18px; /* Smaller font size for headings */
+    }
+  
+    .hero-content p {
+      font-size: 14px; /* Smaller font size for text */
+    }
+  
+    /* Additional styling */
+  }
+  

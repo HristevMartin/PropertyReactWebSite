@@ -83,7 +83,7 @@
 
 @media (max-width: 600px) {
   .container-card-container {
-    max-width: 100%;
+    max-width: 300px;
     margin: 10px; /* Smaller margin for mobile */
   }
 }

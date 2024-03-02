@@ -1,15 +1,16 @@
 .header {
   background-color: #ffffff;
   border-bottom: 1px solid #e6e6e6;
+  position: relative; /* Add positioning context for absolute children */
+  z-index: 10;
 }
-/* 
+
 .navbar {
-  display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
-  /* padding: 1rem 5%; */
-  /* margin-bottom: 0px !important;
-} */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
+}
 
 ol,
 ul {
@@ -22,13 +23,10 @@ ul {
   border-radius: 6%;
 }
 
-.nav-links {
-  list-style-type: none;
+.nav-links-element {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 1rem;
-  margin-right: 38px !important;
+  margin-right: 38px;
 }
 
 .nav-links a {
@@ -43,3 +41,130 @@ ul {
   background-color: #007bff;
   color: #ffffff;
 }
+
+.nav-toggle {
+  display: none;
+}
+
+.nav-toggle:focus {
+  outline: none;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  background-color: #007bff;
+  color: #ffffff;
+  transform: scale(1.05); /* Interactive feedback */
+}
+
+
+@media (max-width: 450px) {
+  .nav-links {
+    display: none;
+    height: auto;
+  }
+
+  .nav-toggle {
+    margin-right: 10px !important;
+    background-color: none !important;
+  }
+
+  .hamburger{
+    margin-right: 32px !important;
+  }
+
+  .nav-visible {
+    display: flex !important;
+    flex-direction: column !important;
+    color: black;
+    position: absolute;
+    top: 100% !important;
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    background-color: #ffffff !important;
+    border-top: 1px solid #e6e6e6 !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1rem 0 !important;
+    z-index: 15 !important;
+  }
+
+  .img-logo{
+    margin-left: 10px;
+  }
+
+  .nav-links-element a {
+    color: black;
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 1rem; /* Larger tap area */
+  }
+
+  .hamburger {
+    width: 2rem;
+    height: 0.25rem;
+    background: #333;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s linear;
+  }
+
+  .hamburger::before,
+  .hamburger::after {
+    content: "";
+    position: absolute;
+    width: 2rem;
+    height: 0.25rem;
+    background: #333;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+  }
+
+  .hamburger::before {
+    transform: translateY(-0.5rem);
+  }
+
+  .hamburger::after {
+    transform: translateY(0.5rem);
+  }
+
+  .nav-links-element {
+    display: flex;
+    flex-direction: column;
+  }
+/*  */
+  .nav-links-element li a{
+    font-size: 14px !important;
+    padding: 2px 4px;
+    
+  }
+
+  .nav-links.nav-visible  {
+    display: block !important;
+    color: black !important;
+    font-size: 16px !important;
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-toggle {
+    margin-right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;  /* Set a specific width */
+    height: 40px; /* Set a specific height */
+    cursor: pointer;
+    z-index: 16;
+  }
+
+}
+

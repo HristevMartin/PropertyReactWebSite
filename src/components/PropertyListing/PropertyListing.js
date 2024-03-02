@@ -286,9 +286,6 @@ const PropertyListing = () => {
     setUserMessage(e.target.value);
   };
 
-  const closeChatBot = () => {
-    setChatBot(false);
-  };
 
   const handlePriceChange = (event) => {
     console.log("event of handlePriceChange", event.target.value);
