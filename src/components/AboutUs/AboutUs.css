@@ -15,6 +15,9 @@
   width: 94%;
   height: 70vh;
   margin: auto;
+  object-fit: cover;
+  object-position: center !important;
+  filter: brightness(50%);
 }
 
 
@@ -164,6 +167,8 @@
     align-items: center;
   }
 
+  
+
   .info-section, .team-member {
     width: 80%;
     margin-bottom: 20px;
@@ -180,4 +185,5 @@
   .elevated {
     transform: translateY(0);
   }
+
 }
